@@ -39,6 +39,13 @@ public class Optimize {
 				
 		
 	}
+	
+	public static void cleanup() {
+		if (DEBUG)
+			System.out.println("Cleanup");
+		baseRefs.clear();
+		refIdCounter = 0;
+	}
 
 	
 	public static void placeRefTags() {

@@ -41,6 +41,17 @@ public class Results {
 		});
 		btnNewButton.setBounds(10, 436, 154, 23);
 		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Back to Menu");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				Optimize.cleanup();
+				GUI.main(null);
+			}
+		});
+		btnNewButton_1.setBounds(174, 436, 154, 23);
+		frame.getContentPane().add(btnNewButton_1);
 		frame.setSize(1250, 509);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);

@@ -8,6 +8,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -16,7 +17,7 @@ import java.awt.event.ActionEvent;
 
 public class GUI {
 
-	private JFrame frmXmlGenerator;
+	private JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -26,7 +27,7 @@ public class GUI {
 			public void run() {
 				try {
 					GUI window = new GUI();
-					window.frmXmlGenerator.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,36 +47,39 @@ public class GUI {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
-		frmXmlGenerator = new JFrame();
-		frmXmlGenerator.setTitle("XML Generator");
-		frmXmlGenerator.setBounds(100, 100, 437, 397);
-		frmXmlGenerator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmXmlGenerator.getContentPane().setLayout(null);
+		frame = new JFrame();
+		frame.setTitle("XML Generator");
+		frame.setBounds(100, 100, 437, 397);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 49, 166, 260);
-		frmXmlGenerator.getContentPane().add(textArea);
+		//textArea.setBounds(10, 49, 166, 260);
+		//frmXmlGenerator.getContentPane().add(textArea);
 		
+		JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBounds(10,49,166,260);
+		frame.getContentPane().add(scroll);
 		JLabel lblNewLabel = new JLabel("Label Names");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 24, 166, 14);
-		frmXmlGenerator.getContentPane().add(lblNewLabel);
+		frame.getContentPane().add(lblNewLabel);
 		
 		JComboBox labelType = new JComboBox();
 		labelType.setModel(new DefaultComboBoxModel(new String[] {"LabelVis_ESPCs", "LabelVis_Misc", "LabelVis_Motors", "LabelVis_PEs"}));
 		labelType.setBounds(203, 48, 189, 27);
-		frmXmlGenerator.getContentPane().add(labelType);
+		frame.getContentPane().add(labelType);
 		
 		JButton btnNewButton = new JButton("Generate");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmXmlGenerator.setVisible(false); //quit this menu
+				frame.setVisible(false); //quit this menu
 				Driver driver = new Driver();
 				driver.doWork(textArea.getText(), labelType.getSelectedItem().toString()); //do the work				
 			}
 		});
 		btnNewButton.setBounds(203, 110, 154, 43);
-		frmXmlGenerator.getContentPane().add(btnNewButton);
+		frame.getContentPane().add(btnNewButton);
 		
 	}
 }
