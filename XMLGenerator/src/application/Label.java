@@ -8,8 +8,8 @@ public class Label {
 	private String title;
 	private int idNum;
 	private HashMap<String, StringBuffer> optimizableTags;
-	private StringBuffer p2df = new StringBuffer("<p2df>32.0;19.0</p2df>");
-	private StringBuffer r2dd = new StringBuffer("<r2dd>341.0;411.0;32.0;19.0</r2dd>");
+	private StringBuffer p2df = new StringBuffer("<p2df>66.0;21.0</p2df>");
+	private StringBuffer r2dd = new StringBuffer("<r2dd>341.0;411.0;66.0;21.0</r2dd>");
 	private StringBuffer str1, str2;
 	
 	public Label(String title, int n) {
