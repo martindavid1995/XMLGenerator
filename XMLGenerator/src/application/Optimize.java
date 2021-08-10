@@ -12,7 +12,7 @@ import java.util.HashMap;
  */
 public class Optimize {
 	private static HashMap<Integer, Reference> baseRefs = new HashMap<Integer, Reference>();
-	private static int refIdCounter = 0;
+	private static int refIdCounter = 1;
 	public final static boolean DEBUG = true;
 	
 	
@@ -44,7 +44,7 @@ public class Optimize {
 		if (DEBUG)
 			System.out.println("Cleanup");
 		baseRefs.clear();
-		refIdCounter = 0;
+		refIdCounter = 1;
 	}
 
 	
@@ -67,6 +67,8 @@ public class Optimize {
 		
 		addRef(label, optTags.get("p2df").toString(), "p2df");
 		addRef(label, optTags.get("r2dd").toString(), "r2dd");
+		addRef(label, optTags.get("conveyor").toString(), "conveyor");
+		addRef(label, optTags.get("rotation").toString(), "rotation");
 			
 	}
 	
@@ -110,9 +112,11 @@ public class Optimize {
 		baseRefs.put(refIdCounter, newRef);
 		refIdCounter++;
 		
+		/*
 		if (title.compareTo("str") == 0) {
 			l.doStrSwap(newRef.getRefId());
 		}
+		*/
 		
 	}
 	

@@ -5,7 +5,7 @@ import java.util.Random;
 public class makeupshit {
 	public static void main(String args[]) {
 		
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 200; i++) {
 			for (int j = 0; j < 8; j++) {
 				System.out.print((char)randInt(97,122));
 			}
