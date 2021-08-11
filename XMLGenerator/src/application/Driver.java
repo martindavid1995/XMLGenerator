@@ -1,6 +1,8 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 /**
@@ -15,23 +17,65 @@ public class Driver {
 	public StringBuffer content = new StringBuffer();
 	public StringBuffer finalOutput = new StringBuffer();
 	public ArrayList<Label> labels = new ArrayList<Label>();
+	private HashMap<String, Double[]> positions = new HashMap<String, Double[]>();
+	
 	
 	private final boolean OPTIMIZE = true;
 		
-	public void doWork(String labelNames, String labelType) {
+	public void doWork(String userInput, Boolean doCoords) {
 		Header.genHeader(finalOutput);  
+		String splitInput = splitInput(userInput);
+				
+		generateLabels(splitInput);
+						
 		
-		generateLabels(labelNames);
-		
-		if (OPTIMIZE)
-			Optimize.init(labels); //optimize the labels
 		
 		for (Label l : labels)  //add the labels
 			content.append(l.toString());
 		
+		if (doCoords) {
+			positions = Optimize.reposition(userInput);
+			for (Label l : labels) {
+				for (String s : positions.keySet()) {
+					if (l.getTitle().compareTo(s) == 0){
+						System.out.println("found a match");
+						l.changeCoords(positions.get(s)[0], positions.get(s)[1]);
+						System.out.println(l.getX() + " : " + l.getY());						
+					}
+				}
+			}
+			
+			content = new StringBuffer();
+			for (Label l : labels) {
+				content.append(l.toString());
+			}
+				
+		}
+		
+		if (OPTIMIZE)
+			Optimize.init(labels); //optimize the labels
+		
+				
 		finalOutput.append(content.toString());
 		finalOutput.append("</objects>");
+		
+		//reposition
+		
 		printResults();
+	}
+	
+	private String splitInput(String input) {
+		String in = "";
+		String[] asArray = input.split("\\r?\\n");
+		
+		for (int i = 0; i < asArray.length; i++) {
+			if (!asArray[i].contains(";")) { 
+				in += asArray[i] + "\n";
+			}
+		}
+			
+		
+		return in;
 	}
 	
 	public void printResults() {

@@ -7,9 +7,11 @@ public class Label {
 	private StringBuffer contents;
 	private String title;
 	private int idNum;
+	private double x = 341.0;
+	private double y = 411.0;
 	private HashMap<String, StringBuffer> optimizableTags;
-	private StringBuffer p2df = new StringBuffer("<p2df>66.0;21.0</p2df>");
-	private StringBuffer r2dd = new StringBuffer("<r2dd>341.0;411.0;66.0;21.0</r2dd>");
+	private StringBuffer p2df = new StringBuffer("<p2df>80.0;21.0</p2df>");
+	private StringBuffer r2dd = new StringBuffer("<r2dd>"+x+";"+y+";80.0;21.0</r2dd>");
 	//private StringBuffer str1, str2; 
 	private StringBuffer str;
 	private StringBuffer rotationAngle = new StringBuffer("<str>RotationAngle</str>");
@@ -33,6 +35,16 @@ public class Label {
 		optimizableTags.put("str", str);
 		optimizableTags.put("rotation", rotationAngle);
 		optimizableTags.put("conveyor", conveyorLabel);
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	
+	public void changeCoords(double x, double y) {
+		this.r2dd = new StringBuffer("<r2dd>"+x+";"+y+";80.0;21.0</r2dd>");
+		contents.delete(0, Integer.MAX_VALUE); //clear the contents and re-generate
+		generateContents();
 	}
 	
 	private void generateContents() {
@@ -73,10 +85,12 @@ public class Label {
 			
 	}
 	private StringBuffer getLabel() {
-		if (idNum == 1)
+		/*if (idNum == 1)
 			return new StringBuffer("<str>Label</str>");
 		else
 			return new StringBuffer("<str>Label "+(idNum-1)+"</str>"); 	
+		*/
+		return new StringBuffer("<str>lbl_"+title+"</str>");
 	}
 	
 	private void tab(int n) {
@@ -124,7 +138,12 @@ public class Label {
 		contents.delete(0, Integer.MAX_VALUE);
 		generateContents();
 	}
-	
+	public Double getX() {
+		return x;
+	}
+	public Double getY() {
+		return y;
+	}
 	public String toString() {
 		return contents.toString();
 	}

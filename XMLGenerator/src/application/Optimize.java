@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Optimize {
 	private static HashMap<Integer, Reference> baseRefs = new HashMap<Integer, Reference>();
 	private static int refIdCounter = 1;
-	public final static boolean DEBUG = true;
+	public final static boolean DEBUG = false;
 	
 	
 	public static void init(ArrayList<Label> labels) {
@@ -34,11 +34,34 @@ public class Optimize {
 		}
 		
 		placeRefTags();
-		
-		
-				
+					
 		
 	}
+	
+	public static HashMap<String, Double[]> reposition(String userInput) {
+		String[] inputAsList = userInput.split("\\r?\\n"); //Evens are the coords, +1 is the label
+		HashMap<String, Double[]> newCoords = new HashMap<String, Double[]>();
+		for (int i = 0; i < inputAsList.length; i++) {
+			if (i % 2 == 0) {
+				String[] s = inputAsList[i].split("\\;");
+				//System.out.println("x: "+s[0] + " y: "+s[1]);
+				Double[] coords = new Double[2];
+				coords[0] = Double.parseDouble(s[0]);
+				coords[1] = Double.parseDouble(s[1]);
+				newCoords.put(inputAsList[i+1], coords);
+			}
+		}
+		if (DEBUG) {
+			System.out.println("--REPOSITIONING--");
+			for (String s : newCoords.keySet()) 
+				System.out.println("Moving "+s + " to x:" + newCoords.get(s)[0]+ " y:"+newCoords.get(s)[1]);	
+		}
+			
+		
+		return newCoords;
+		
+	}
+	
 	
 	public static void cleanup() {
 		if (DEBUG)
@@ -119,6 +142,8 @@ public class Optimize {
 		*/
 		
 	}
+
+
 	
 	
 	
