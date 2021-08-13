@@ -13,6 +13,9 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class GUI {
@@ -28,6 +31,10 @@ public class GUI {
 			+ "The only allowed special character is the underscore '_' \n\nAll other special characters (*, %, $, etc) are prohibited\r\n\n"
 			+ "Duplicate labels are prohibited";
 	private JTextArea directionsField;
+	
+	private ArrayList<String> dupeNames = new ArrayList<String>();
+	
+	
 
 	/**
 	 * Launch the application.
@@ -67,6 +74,9 @@ public class GUI {
 		//textArea.setBounds(10, 49, 166, 260);
 		//frmXmlGenerator.getContentPane().add(textArea);
 		
+	
+			
+		
 		JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBounds(10,49,166,357);
 		frame.getContentPane().add(scroll);
@@ -78,6 +88,7 @@ public class GUI {
 		
 		directionsField = new JTextArea();
 		directionsField.setBounds(203, 129, 328, 223);
+		directionsField.setOpaque(false);
 		frame.getContentPane().add(directionsField);
 		directionsField.setColumns(10);
 		directionsField.setLineWrap(true);
@@ -102,10 +113,14 @@ public class GUI {
 		JButton btnNewButton = new JButton("Generate");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false); //quit this menu
-				Driver driver = new Driver();
-								
-				driver.doWork(textArea.getText(), labelType.getSelectedItem().toString().compareTo("Labels + Coordinates") == 0); //do the work	
+				Driver driver = new Driver();	
+				if (checkForDupes(textArea.getText())) {
+					Warning.run(dupeNames);	
+				}else {
+					frame.setVisible(false); //quit this menu
+					driver.doWork(textArea.getText(), labelType.getSelectedItem().toString().compareTo("Labels + Coordinates") == 0); //do the work	
+				}
+				
 				
 			}
 		});
@@ -116,9 +131,29 @@ public class GUI {
 		lblNewLabel_1.setBounds(203, 105, 154, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 		
-		;
-		
+				
 		
 		
 	}
+	
+	private boolean checkForDupes(String input) {
+		List<String> strippedInput = Driver.stripInput(input);
+		
+		for (String s : strippedInput) {
+			
+			if (s.contains(";")) 
+				continue;
+			
+			if (Collections.frequency(strippedInput, s) > 1) 
+				dupeNames.add(s);
+							
+		}
+		
+		
+		return dupeNames.size() > 0 ? true : false;
+	}
+	
+	
+	
+		
 }

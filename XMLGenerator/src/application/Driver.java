@@ -2,6 +2,7 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Driver {
 	public StringBuffer finalOutput = new StringBuffer();
 	public ArrayList<Label> labels = new ArrayList<Label>();
 	private HashMap<String, Double[]> positions = new HashMap<String, Double[]>();
+	private Boolean coords = false;
 	
 	
 	private final boolean OPTIMIZE = true;
@@ -25,7 +27,9 @@ public class Driver {
 	public void doWork(String userInput, Boolean doCoords) {
 		Header.genHeader(finalOutput);  
 		String splitInput = splitInput(userInput);
-				
+		
+		coords = doCoords;
+		
 		generateLabels(splitInput);
 						
 		
@@ -38,9 +42,8 @@ public class Driver {
 			for (Label l : labels) {
 				for (String s : positions.keySet()) {
 					if (l.getTitle().compareTo(s) == 0){
-						System.out.println("found a match");
 						l.changeCoords(positions.get(s)[0], positions.get(s)[1]);
-						System.out.println(l.getX() + " : " + l.getY());						
+						//System.out.println(l.getX() + " : " + l.getY());						
 					}
 				}
 			}
@@ -53,13 +56,10 @@ public class Driver {
 		}
 		
 		if (OPTIMIZE)
-			Optimize.init(labels); //optimize the labels
-		
+			Optimize.init(labels); 
 				
 		finalOutput.append(content.toString());
 		finalOutput.append("</objects>");
-		
-		//reposition
 		
 		printResults();
 	}
@@ -89,6 +89,11 @@ public class Driver {
 		int num = 0;
 		header.append("\t<arraylist len=\"0\"/>\n");
 		for (String s : strippedInput) {
+			if (!coords) {
+				if (s.contains(";"))
+					continue;
+			}
+			
 			num++;
 			if (Optimize.DEBUG)
 				System.out.println("doing "+s);
@@ -99,10 +104,11 @@ public class Driver {
 				
 	}
 	
+
 		
 	
 	
-	private static List<String> stripInput(String in) {
+	public static List<String> stripInput(String in) {
 		String[] input = in.split("\\r?\\n");
 		List<String> inputList = new LinkedList<String>();
 		
