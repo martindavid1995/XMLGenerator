@@ -12,9 +12,18 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * GUI of a Warning message used to alert the user that they have supplied
+ * invalid duplicate label names. Shows the user which label names are duplicates,
+ * and how many duplicates of each label name exist (in parenthesis). Also allows
+ * the user to go back and edit their existing list to correct it, instead of having to
+ * paste in a new list of input from scratch. 
+ * @author David Martin
+ *
+ */
 public class Warning {
 
+	
 	private JPanel contentPane;
 	private static ArrayList<String> dupeList;
 	private JTextArea txtrTheFollowingLabels;
@@ -22,8 +31,8 @@ public class Warning {
 	private static TreeMap<String, Integer> dupeMap = new TreeMap<String, Integer>();
 	
 	/**
-	 * Launch the application.
-	 * @return 
+	 * Launch the application. We pass in the ArrayList of duplicate names
+	 * from the main GUI.java
 	 */
 	public static void run(ArrayList<String> dupeNames) {
 		dupeList = dupeNames;
@@ -46,6 +55,9 @@ public class Warning {
 		init();
 	}
 	
+	/**
+	 * The frame itself.
+	 */
 	private void init() {
 		frame = new JFrame();
 		frame.setTitle("Warning - Duplicate Labels");
@@ -76,7 +88,7 @@ public class Warning {
 		dupePrint.setLineWrap(true);
 		dupePrint.setOpaque(false);
 		
-		
+		//Pull the list of duplicate label names
 		dupePrint.setText(makePretty());
 		
 		
@@ -96,6 +108,21 @@ public class Warning {
 		contentPane.add(btnGoBack);
 	}
 	
+	/**
+	 * Generates a string of the Label names that are duplicates, followed by how many times
+	 * each label is duplicated. For example, an invalid input as such:
+	 * 
+	 * one
+	 * two
+	 * one
+	 * three
+	 * two
+	 * one
+	 * 
+	 * results in: 
+	 * one(3), two(2)
+	 * @returns formatted String of which labels are duplicates
+	 */
 	private String makePretty() {
 		StringBuffer result = new StringBuffer();
 		
@@ -109,7 +136,7 @@ public class Warning {
 		
 		for (String s : dupeMap.keySet()) {
 			result.append(s + " ("+dupeMap.get(s)+")");	
-			if (!dupeMap.lastKey().equals(s)) {
+			if (!dupeMap.lastKey().equals(s)) { //All labels except for the last one get the comma
 				result.append(", ");
 			}
 		}

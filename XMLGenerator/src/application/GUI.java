@@ -17,7 +17,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.awt.event.ActionEvent;
-
+/**
+ * Main Menu GUI
+ * Instructs the user how to use the application by providing directions, a field for input entry, mode select, manages warning messages, etc. 
+ * @author David Martin
+ *
+ */
 public class GUI {
 
 	private JFrame frame;
@@ -71,12 +76,6 @@ public class GUI {
 		frame.getContentPane().setLayout(null);
 		
 		JTextArea textArea = new JTextArea();
-		//textArea.setBounds(10, 49, 166, 260);
-		//frmXmlGenerator.getContentPane().add(textArea);
-		
-	
-			
-		
 		JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBounds(10,49,166,357);
 		frame.getContentPane().add(scroll);
@@ -84,7 +83,6 @@ public class GUI {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 24, 166, 14);
 		frame.getContentPane().add(lblNewLabel);
-		//dirFieldLabels.setVisible(true);
 		
 		directionsField = new JTextArea();
 		directionsField.setBounds(203, 129, 328, 223);
@@ -96,6 +94,8 @@ public class GUI {
 		
 		JComboBox labelType = new JComboBox();
 		labelType.addActionListener(new ActionListener() {
+			
+			//Displaying the different instructions depending on which "mode" is selected.
 			public void actionPerformed(ActionEvent e) {
 				if (labelType.getSelectedItem() == "Labels + Coordinates") {
 					directionsField.setText(directionsCoords);
@@ -114,7 +114,7 @@ public class GUI {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Driver driver = new Driver();	
-				if (checkForDupes(textArea.getText())) {
+				if (checkForDupes(textArea.getText())) { //Checks for duplicates and pops the warning if they are found
 					Warning.run(dupeNames);	
 				}else {
 					frame.setVisible(false); //quit this menu
@@ -136,19 +136,25 @@ public class GUI {
 		
 	}
 	
+	/**
+	 * Used to check input for duplicate labelNames so that we can pop a warning instead of 
+	 * creating XML with duplicate labels (which surely would break things)
+	 * @param input
+	 * @return T/F
+	 */
 	private boolean checkForDupes(String input) {
-		List<String> strippedInput = Driver.stripInput(input);
+		//Turn the block input into a List separated by each newline
+		List<String> strippedInput = Driver.stripInput(input); 
 		
 		for (String s : strippedInput) {
 			
-			if (s.contains(";")) 
+			if (s.contains(";")) //Coordinate strings don't count (dupes are allowed)
 				continue;
 			
 			if (Collections.frequency(strippedInput, s) > 1) 
 				dupeNames.add(s);
 							
 		}
-		
 		
 		return dupeNames.size() > 0 ? true : false;
 	}

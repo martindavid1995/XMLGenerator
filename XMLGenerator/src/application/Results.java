@@ -9,10 +9,12 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-
+/**
+ * GUI window to display the final XML results. 
+ * @author David Martin
+ *
+ */
 public class Results {
-
-	
 	
 	/**
 	 * @wbp.parser.entryPoint
@@ -24,7 +26,6 @@ public class Results {
 		frame.getContentPane().setLayout(null);
 		final JTextArea textArea = new JTextArea(10,20);
 		JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		//scroll.setBounds(0, 0, 1234, 470);
 		scroll.setBounds(0, 0, 1234, 425);
 		textArea.setText(XML.toString());
 		textArea.setLineWrap(false);
@@ -32,13 +33,15 @@ public class Results {
 		
 		JButton btnNewButton = new JButton("Copy to Clipboard");
 		btnNewButton.addActionListener(new ActionListener() {
+			
+			//Copying the XML to user's clipboard 
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println("Text Copied");
 				StringSelection toCopy = new StringSelection(textArea.getText());
 				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clipboard.setContents(toCopy, toCopy);
 			}
 		});
+		
 		btnNewButton.setBounds(10, 436, 154, 23);
 		frame.getContentPane().add(btnNewButton);
 		
@@ -46,6 +49,7 @@ public class Results {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
+				//Reset the reference list and counters
 				Optimize.cleanup();
 				GUI.main(null);
 			}
