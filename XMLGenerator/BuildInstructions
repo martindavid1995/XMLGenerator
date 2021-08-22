@@ -1,5 +1,0 @@
-Notes for compiling as .EXE
-
-Export thru eclipse as as runnable jar using JRE compliance 1.8.0 with the required libraries extracted.
-
-In L4J, compile with min JRE as 1.8.0 and max JRE as 1.9.0
