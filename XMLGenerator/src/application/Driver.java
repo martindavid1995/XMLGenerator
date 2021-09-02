@@ -87,7 +87,7 @@ public class Driver {
 	 * Takes the user input and returns a String containing only the label
 	 * names separated by newlines. 
 	 * @param input
-	 * @returns String consisting of only the label names
+	 * @return String consisting of only the label names
 	 */
 	private String splitInput(String input) {
 		String in = "";
@@ -115,7 +115,7 @@ public class Driver {
 	
 	/**
 	 * Creates a new label object and adds it to the labels list
-	 * @param input
+	 * @param user input
 	 */
 	private void generateLabels(String input){
 		//Get just the names of the labels
@@ -147,7 +147,7 @@ public class Driver {
 	 * Converts the user input into a LinkedList of just the label names
 	 * Used by generateLabels()
 	 * @param in
-	 * @returns 
+	 * @return a stripped list of label names/locations
 	 */
 	public static List<String> stripInput(String in) {
 		String[] input = in.split("\\r?\\n");
