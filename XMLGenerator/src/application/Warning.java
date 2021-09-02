@@ -33,6 +33,7 @@ public class Warning {
 	/**
 	 * Launch the application. We pass in the ArrayList of duplicate names
 	 * from the main GUI.java
+	 * @param ArrayList containing which labels are found as duplicates
 	 */
 	public static void run(ArrayList<String> dupeNames) {
 		dupeList = dupeNames;
