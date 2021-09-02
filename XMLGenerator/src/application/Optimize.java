@@ -42,7 +42,7 @@ public class Optimize {
 	/**
 	 * Generates a HashMap of information regarding how we want to reposition each label.
 	 * @param userInput
-	 * @returns a HashMap containing each label id as the key and the new x/y coordinates as the value
+	 * @return a HashMap containing each label id as the key and the new x/y coordinates as the value
 	 */
 	public static HashMap<String, Double[]> reposition(String userInput) {
 		String[] inputAsList = userInput.split("\\r?\\n"); 
@@ -106,7 +106,7 @@ public class Optimize {
 	/**
 	 * Goes through the label's contents and determines if any of that label's optimizable
 	 * tags are found in our baseRefs HashMap, and refs them if we find such a match. 
-	 * @param l
+	 * @param label
 	 */
 	public static void checkLabelForReffedStrings(Label l) {
 		HashMap<String, StringBuffer> labelTags = l.getOptimizableTags();
