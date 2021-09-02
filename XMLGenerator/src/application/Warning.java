@@ -121,7 +121,7 @@ public class Warning {
 	 * 
 	 * results in: 
 	 * one(3), two(2)
-	 * @returns formatted String of which labels are duplicates
+	 * @return formatted String of which labels are duplicates
 	 */
 	private String makePretty() {
 		StringBuffer result = new StringBuffer();
