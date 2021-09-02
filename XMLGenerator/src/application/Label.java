@@ -55,8 +55,8 @@ public class Label {
 	/**
 	 * Changes the x and y coordinates of a label's <r2dd> tag. Used for
 	 * repositioning labels when the user specifies coordinates. 
-	 * @param x
-	 * @param y
+	 * @param x position
+	 * @param y position
 	 */
 	public void changeCoords(double x, double y) {
 		this.r2dd = new StringBuffer("<r2dd>"+x+";"+y+";80.0;21.0</r2dd>");
